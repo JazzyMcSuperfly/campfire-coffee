@@ -6,7 +6,7 @@ var pikePlace = {
   maxCustomersHour: 35,
   avgCupsPerCustomer: 1.2,
   avgPoundsPerCustomer: 0.34,
-  beansPerHour: [],
+  totalBeansPerHour: [],
   customersPerHour: [],
   cupsPerHour: [],
   beansNeededForCupsPerHour: [],
@@ -15,6 +15,7 @@ var pikePlace = {
   dailyCupsTotal: 0,
   dailyPoundPackagesTotal: 0,
   dailyBeansNeeded: 0,
+
   calcCustomersPerHour: function(min,max) {
     for (var i = 0; i < hours.length; i ++) {
       var customers = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -36,10 +37,18 @@ var pikePlace = {
     }
   },
 
+  calcPoundPacksPerHour: function() {
+    for (var i = 0; i < hours.length; i ++) {
+      var packs = Math.round(this.customersPerHour[i] * this.avgPoundsPerCustomer);
+      this.poundPackagesPerHour.push(packs);
+    }
+  },
+
   render: function() {
     pikePlace.calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
     pikePlace.calcCupsPerHour();
     pikePlace.calcBeansNeededForCupsPerHour();
+    pikePlace.calcPoundPacksPerHour();
     // call all of the other methods that calc data
     var ulElement = document.getElementById('pike');
     for (var i = 0; i < hours.length; i++) {
@@ -47,7 +56,7 @@ var pikePlace = {
       // give that <li> content
       // append the <li> to the <ul>
       var liElement = document.createElement('li');
-      liElement.textContent = this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.beansNeededForCupsPerHour[i] + ' lbs), ';
+      liElement.textContent = this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.beansNeededForCupsPerHour[i] + ' lbs), ' + this.poundPackagesPerHour[i] + ' lbs to-go';
       ulElement.appendChild(liElement);
     }
   }
