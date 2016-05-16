@@ -51,12 +51,40 @@ var pikePlace = {
     }
   },
 
+  calcDailyCustTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyCustomersTotal += this.customersPerHour[i];
+    }
+  },
+
+  calcDailyCupsTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyCupsTotal += this.cupsPerHour[i];
+    }
+  },
+
+  calcDailyPoundPackagesTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyPoundPackagesTotal += this.poundPackagesPerHour[i];
+    }
+  },
+
+  calcDailyBeansNeededTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyBeansNeeded += this.totalPoundsPerHour[i];
+    }
+  },
+
   render: function() {
     pikePlace.calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
     pikePlace.calcCupsPerHour();
     pikePlace.calcBeansNeededForCupsPerHour();
     pikePlace.calcPoundPacksPerHour();
     pikePlace.calcTotalPoundsPerHour();
+    pikePlace.calcDailyCustTotal();
+    pikePlace.calcDailyCupsTotal();
+    pikePlace.calcDailyPoundPackagesTotal();
+    pikePlace.calcDailyBeansNeededTotal();
     // call all of the other methods that calc data
     var ulElement = document.getElementById('pike');
     for (var i = 0; i < hours.length; i++) {
@@ -67,6 +95,18 @@ var pikePlace = {
       liElement.textContent = this.totalPoundsPerHour[i] + ' lbs [' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.beansNeededForCupsPerHour[i] + ' lbs), ' + this.poundPackagesPerHour[i] + ' lbs to-go]';
       ulElement.appendChild(liElement);
     }
+    var custTotalEl = document.createElement('li');
+    custTotalEl.textContent = 'Total customers at ' + this.locationName + ': ' + this.dailyCustomersTotal;
+    ulElement.appendChild(custTotalEl);
+    var cupsTotalEl = document.createElement('li');
+    cupsTotalEl.textContent = 'Total cups sold at ' + this.locationName + ': ' + this.dailyCupsTotal;
+    ulElement.appendChild(cupsTotalEl);
+    var poundsTotalEl = document.createElement('li');
+    poundsTotalEl.textContent = 'Total pound packages sold at ' + this.locationName + ': ' + this.dailyPoundPackagesTotal;
+    ulElement.appendChild(poundsTotalEl);
+    var beansTotalEl = document.createElement('li');
+    beansTotalEl.textContent = 'Total beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
+    ulElement.appendChild(beansTotalEl);
   }
 };
 
