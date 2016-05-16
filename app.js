@@ -105,7 +105,7 @@ var pikePlace = {
     poundsTotalEl.textContent = 'Total pound packages sold at ' + this.locationName + ': ' + this.dailyPoundPackagesTotal;
     ulElement.appendChild(poundsTotalEl);
     var beansTotalEl = document.createElement('li');
-    beansTotalEl.textContent = 'Total beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
+    beansTotalEl.textContent = 'Total pounds of beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
     ulElement.appendChild(beansTotalEl);
   }
 };
@@ -217,7 +217,7 @@ var capitolHill = {
     poundsTotalEl.textContent = 'Total pound packages sold at ' + this.locationName + ': ' + this.dailyPoundPackagesTotal;
     ulElement.appendChild(poundsTotalEl);
     var beansTotalEl = document.createElement('li');
-    beansTotalEl.textContent = 'Total beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
+    beansTotalEl.textContent = 'Total pounds of beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
     ulElement.appendChild(beansTotalEl);
   }
 };
@@ -329,7 +329,7 @@ var seattlePublicLibrary = {
     poundsTotalEl.textContent = 'Total pound packages sold at ' + this.locationName + ': ' + this.dailyPoundPackagesTotal;
     ulElement.appendChild(poundsTotalEl);
     var beansTotalEl = document.createElement('li');
-    beansTotalEl.textContent = 'Total beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
+    beansTotalEl.textContent = 'Total pounds of beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
     ulElement.appendChild(beansTotalEl);
   }
 };
@@ -441,7 +441,7 @@ var southLakeUnion = {
     poundsTotalEl.textContent = 'Total pound packages sold at ' + this.locationName + ': ' + this.dailyPoundPackagesTotal;
     ulElement.appendChild(poundsTotalEl);
     var beansTotalEl = document.createElement('li');
-    beansTotalEl.textContent = 'Total beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
+    beansTotalEl.textContent = 'Total pounds of beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
     ulElement.appendChild(beansTotalEl);
   }
 };
@@ -553,7 +553,7 @@ var seaTacAirport = {
     poundsTotalEl.textContent = 'Total pound packages sold at ' + this.locationName + ': ' + this.dailyPoundPackagesTotal;
     ulElement.appendChild(poundsTotalEl);
     var beansTotalEl = document.createElement('li');
-    beansTotalEl.textContent = 'Total beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
+    beansTotalEl.textContent = 'Total pounds of beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
     ulElement.appendChild(beansTotalEl);
   }
 };
