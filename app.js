@@ -29,9 +29,17 @@ var pikePlace = {
     }
   },
 
+  calcBeansNeededForCupsPerHour: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var beans = Math.ceil(this.cupsPerHour[i] / 16);
+      this.beansNeededForCupsPerHour.push(beans);
+    }
+  },
+
   render: function() {
     pikePlace.calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
     pikePlace.calcCupsPerHour();
+    pikePlace.calcBeansNeededForCupsPerHour();
     // call all of the other methods that calc data
     var ulElement = document.getElementById('pike');
     for (var i = 0; i < hours.length; i++) {
@@ -39,7 +47,7 @@ var pikePlace = {
       // give that <li> content
       // append the <li> to the <ul>
       var liElement = document.createElement('li');
-      liElement.textContent = this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups per hour, ';
+      liElement.textContent = this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.beansNeededForCupsPerHour[i] + ' lbs), ';
       ulElement.appendChild(liElement);
     }
   }
