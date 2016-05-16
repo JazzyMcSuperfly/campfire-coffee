@@ -64,7 +64,7 @@ var pikePlace = {
       // give that <li> content
       // append the <li> to the <ul>
       var liElement = document.createElement('li');
-      liElement.textContent = this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.beansNeededForCupsPerHour[i] + ' lbs), ' + this.poundPackagesPerHour[i] + ' lbs to-go';
+      liElement.textContent = this.totalPoundsPerHour[i] + ' lbs [' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.beansNeededForCupsPerHour[i] + ' lbs), ' + this.poundPackagesPerHour[i] + ' lbs to-go]';
       ulElement.appendChild(liElement);
     }
   }
