@@ -335,3 +335,115 @@ var seattlePublicLibrary = {
 };
 
 seattlePublicLibrary.render();
+
+var southLakeUnion = {
+  locationName: 'South Lake Union',
+  minCustomersHour: 5,
+  maxCustomersHour: 18,
+  avgCupsPerCustomer: 1.3,
+  avgPoundsPerCustomer: 0.04,
+  totalPoundsPerHour: [],
+  customersPerHour: [],
+  cupsPerHour: [],
+  beansNeededForCupsPerHour: [],
+  poundPackagesPerHour: [],
+  dailyCustomersTotal: 0,
+  dailyCupsTotal: 0,
+  dailyPoundPackagesTotal: 0,
+  dailyBeansNeeded: 0,
+
+  calcCustomersPerHour: function(min,max) {
+    for (var i = 0; i < hours.length; i ++) {
+      var customers = Math.floor(Math.random() * (max - min + 1)) + min;
+      this.customersPerHour.push(customers);
+    }
+  },
+
+  calcCupsPerHour: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var cups = Math.round(this.customersPerHour[i] * this.avgCupsPerCustomer);
+      this.cupsPerHour.push(cups);
+    }
+  },
+
+  calcBeansNeededForCupsPerHour: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var beans = Math.ceil(this.cupsPerHour[i] / 16);
+      this.beansNeededForCupsPerHour.push(beans);
+    }
+  },
+
+  calcPoundPacksPerHour: function() {
+    for (var i = 0; i < hours.length; i ++) {
+      var packs = Math.round(this.customersPerHour[i] * this.avgPoundsPerCustomer);
+      this.poundPackagesPerHour.push(packs);
+    }
+  },
+
+  calcTotalPoundsPerHour: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var pounds = this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i];
+      this.totalPoundsPerHour.push(pounds);
+    }
+  },
+
+  calcDailyCustTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyCustomersTotal += this.customersPerHour[i];
+    }
+  },
+
+  calcDailyCupsTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyCupsTotal += this.cupsPerHour[i];
+    }
+  },
+
+  calcDailyPoundPackagesTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyPoundPackagesTotal += this.poundPackagesPerHour[i];
+    }
+  },
+
+  calcDailyBeansNeededTotal: function() {
+    for (var i = 0; i < hours.length; i++) {
+      this.dailyBeansNeeded += this.totalPoundsPerHour[i];
+    }
+  },
+
+  render: function() {
+    southLakeUnion.calcCustomersPerHour(southLakeUnion.minCustomersHour, southLakeUnion.maxCustomersHour);
+    southLakeUnion.calcCupsPerHour();
+    southLakeUnion.calcBeansNeededForCupsPerHour();
+    southLakeUnion.calcPoundPacksPerHour();
+    southLakeUnion.calcTotalPoundsPerHour();
+    southLakeUnion.calcDailyCustTotal();
+    southLakeUnion.calcDailyCupsTotal();
+    southLakeUnion.calcDailyPoundPackagesTotal();
+    southLakeUnion.calcDailyBeansNeededTotal();
+    // call all of the other methods that calc data
+    var ulElement = document.getElementById('slu');
+    for (var i = 0; i < hours.length; i++) {
+      // create a <li>
+      // give that <li> content
+      // append the <li> to the <ul>
+      var liElement = document.createElement('li');
+      liElement.textContent = this.totalPoundsPerHour[i] + ' lbs [' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.beansNeededForCupsPerHour[i] + ' lbs), ' + this.poundPackagesPerHour[i] + ' lbs to-go]';
+      ulElement.appendChild(liElement);
+    }
+    var custTotalEl = document.createElement('li');
+    custTotalEl.textContent = 'Total customers at ' + this.locationName + ': ' + this.dailyCustomersTotal;
+    ulElement.appendChild(custTotalEl);
+    var cupsTotalEl = document.createElement('li');
+    cupsTotalEl.textContent = 'Total cups sold at ' + this.locationName + ': ' + this.dailyCupsTotal;
+    ulElement.appendChild(cupsTotalEl);
+    var poundsTotalEl = document.createElement('li');
+    poundsTotalEl.textContent = 'Total pound packages sold at ' + this.locationName + ': ' + this.dailyPoundPackagesTotal;
+    ulElement.appendChild(poundsTotalEl);
+    var beansTotalEl = document.createElement('li');
+    beansTotalEl.textContent = 'Total beans needed at ' + this.locationName + ': ' + this.dailyBeansNeeded;
+    ulElement.appendChild(beansTotalEl);
+  }
+};
+
+southLakeUnion.render();
