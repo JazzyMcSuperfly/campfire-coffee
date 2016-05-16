@@ -6,7 +6,7 @@ var pikePlace = {
   maxCustomersHour: 35,
   avgCupsPerCustomer: 1.2,
   avgPoundsPerCustomer: 0.34,
-  totalBeansPerHour: [],
+  totalPoundsPerHour: [],
   customersPerHour: [],
   cupsPerHour: [],
   beansNeededForCupsPerHour: [],
@@ -44,11 +44,19 @@ var pikePlace = {
     }
   },
 
+  calcTotalPoundsPerHour: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var pounds = this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i];
+      this.totalPoundsPerHour.push(pounds);
+    }
+  },
+
   render: function() {
     pikePlace.calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
     pikePlace.calcCupsPerHour();
     pikePlace.calcBeansNeededForCupsPerHour();
     pikePlace.calcPoundPacksPerHour();
+    pikePlace.calcTotalPoundsPerHour();
     // call all of the other methods that calc data
     var ulElement = document.getElementById('pike');
     for (var i = 0; i < hours.length; i++) {
