@@ -1,5 +1,6 @@
 // Global Variables - hours and locations
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
+var allKiosks = [];
 
 //Kiosk Location Constructor
 function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
@@ -22,6 +23,8 @@ function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
   this.dailyPoundPacksTotal = 0;
   this.dailyBeansTotal = 0;
   this.dailyStaffTotal = 0;
+  //Push Kiosk object to allKiosks array
+  allKiosks.push(this);
 };
 
 //Calculation Methods
@@ -62,7 +65,7 @@ CoffeeKiosk.prototype.calcTotalPoundsHourly = function() {
 
 CoffeeKiosk.prototype.calcStaffHourly = function() {
   for (var i = 0; i < hours.length; i++) {
-    var staff = this.custHourly[i] / 2;
+    var staff = Math.ceil(((this.cupsHourly[i] / 60) * 2) + ((this.poundPacksHourly[i] / 60) * 2));
     this.staffHourly.push(staff);
   };
 };
@@ -116,7 +119,7 @@ CoffeeKiosk.prototype.renderBeans = function() {
   trEl.appendChild(tdEl);
 
   var tdEl = document.createElement('td');
-  tdEl.textContent = this.dailyBeansTotal;
+  tdEl.textContent = this.dailyBeansTotal + ' lbs';
   trEl.appendChild(tdEl);
 
   for (var i = 0; i < hours.length; i++) {
@@ -137,7 +140,7 @@ CoffeeKiosk.prototype.renderStaff = function() {
   trEl.appendChild(tdEl);
 
   var tdEl = document.createElement('td');
-  tdEl.textContent = this.dailyStaffTotal;
+  tdEl.textContent = this.dailyStaffTotal + ' Hrs';
   trEl.appendChild(tdEl);
 
   for (var i = 0; i < hours.length; i++) {
@@ -189,6 +192,7 @@ for (var i = 0; i < hours.length; i++) {
   staffTable.appendChild(thEl);
 };
 
+//Render Data Function
 pikePlace.renderBeans();
 pikePlace.renderStaff();
 capitolHill.renderBeans();
@@ -199,3 +203,46 @@ southLakeUnion.renderBeans();
 southLakeUnion.renderStaff();
 seaTacAirport.renderBeans();
 seaTacAirport.renderStaff();
+
+//Render Totals Vars and functions
+var actualStaffDaily = 0;
+var actualStaffHourly = [];
+// var totalHourlyStaff = ;
+
+var calcDailyStaffTotals = function() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    actualStaffDaily += allKiosks[i].dailyStaffTotal;
+  };
+};
+
+// PROBLEM AREA - HELP!!!!!!
+// Renders the totals row ok, but the math itself is not right. been working on it for a while
+// and the solution is still escaping me!!
+var calcHourlyStaffTotals = function() {
+  for (var j = 0; j < allKiosks.length; j++) {
+    for (var i = 0; i < hours.length; i++) {
+      actualStaffHourly.push(allKiosks[j].staffHourly[i]);
+    };
+  };
+};
+
+var renderStaffTotals = function() {
+  calcDailyStaffTotals();
+  calcHourlyStaffTotals();
+  var trEl = document.createElement('tr');
+  var tdEl = document.createElement('td');
+  tdEl.textContent = 'Totals';
+  trEl.appendChild(tdEl);
+
+  var tdEl = document.createElement('td');
+  tdEl.textContent = actualStaffDaily;
+  trEl.appendChild(tdEl);
+
+  for (var i = 0; i < hours.length; i++) {
+    var tdEl = document.createElement('td');
+    tdEl.textContent = actualStaffHourly[i];
+    trEl.appendChild(tdEl);
+  };
+  staffTable.appendChild(trEl);
+};
+renderStaffTotals();
