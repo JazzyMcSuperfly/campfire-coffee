@@ -2,7 +2,7 @@
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
 var allKiosks = [];
 var actualStaffHourly = [];
-var actualStaffDaily = [];
+var actualBeansHourly = [];
 var coffeeTable = document.getElementById('beans-table');
 var staffTable = document.getElementById('baristas-table');
 
@@ -36,72 +36,78 @@ CoffeeKiosk.prototype.calcCustHourly = function(min, max) {
   for (var i = 0; i < hours.length; i ++) {
     var customers = Math.floor(Math.random() * (max - min + 1)) + min;
     this.custHourly.push(customers);
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcCupsHourly = function() {
   for (var i = 0; i < hours.length; i++) {
     var cups = Math.ceil(this.custHourly[i] * this.avgCupsCust);
     this.cupsHourly.push(cups);
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcBeansForCupsHourly = function() {
   for (var i = 0; i < hours.length; i++) {
     var beans = Math.ceil(this.cupsHourly[i] / 16);
     this.beansForCupsHourly.push(beans);
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcPoundPacksHourly = function() {
   for (var i = 0; i < hours.length; i ++) {
     var packs = Math.ceil(this.custHourly[i] * this.avgPoundsCust);
     this.poundPacksHourly.push(packs);
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcTotalPoundsHourly = function() {
   for (var i = 0; i < hours.length; i++) {
     var pounds = this.beansForCupsHourly[i] + this.poundPacksHourly[i];
     this.poundsHourly.push(pounds);
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcStaffHourly = function() {
   for (var i = 0; i < hours.length; i++) {
     var staff = Math.ceil(((this.cupsHourly[i] / 60) * 2) + ((this.poundPacksHourly[i] / 60) * 2));
     this.staffHourly.push(staff);
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcDailyCustTotal = function() {
   for (var i = 0; i < hours.length; i++) {
     this.dailyCustTotal += this.custHourly[i];
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcDailyCupsTotal = function() {
   for (var i = 0; i < hours.length; i++) {
     this.dailyCupsTotal += this.cupsHourly[i];
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcDailyPoundPacksTotal = function() {
   for (var i = 0; i < hours.length; i++) {
     this.dailyPoundPacksTotal += this.poundPacksHourly[i];
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcDailyBeansTotal = function() {
   for (var i = 0; i < hours.length; i++) {
     this.dailyBeansTotal += this.poundsHourly[i];
-  };
+  }
 };
 
 CoffeeKiosk.prototype.calcDailyStaffTotal = function() {
   for (var i = 0; i < hours.length; i++) {
     this.dailyStaffTotal += this.staffHourly[i];
-  };
+  }
+};
+
+CoffeeKiosk.prototype.calcActualStaffHourly = function() {
+  for (var i = 0; i < hours.length; i++) {
+    actualStaffHourly.push(this.staffHourly[i]);
+  }
 };
 
 //Render Methods
@@ -162,7 +168,7 @@ var seattlePublicLibrary = new CoffeeKiosk('Seattle Public Library', 9, 45, 2.6,
 var southLakeUnion = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, 0.04);
 var seaTacAirport = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, 0.41);
 
-//Coffee Table Render
+//Coffee Table header Render
 
 var thEl = document.createElement('th');
 thEl.textContent = '';
@@ -178,7 +184,7 @@ for (var i = 0; i < hours.length; i++) {
   coffeeTable.appendChild(thEl);
 };
 
-// Barista Table Render
+// Barista Table Header Render
 
 var thEl = document.createElement('th');
 thEl.textContent = '';
@@ -194,7 +200,8 @@ for (var i = 0; i < hours.length; i++) {
   staffTable.appendChild(thEl);
 };
 
-//Render Data Function
+
+//Render Data Function -------------- TO BE DRIED LATER
 pikePlace.renderBeans();
 pikePlace.renderStaff();
 capitolHill.renderBeans();
@@ -206,20 +213,50 @@ southLakeUnion.renderStaff();
 seaTacAirport.renderBeans();
 seaTacAirport.renderStaff();
 
-//Render Totals Vars and functions
+var beanFooterTotalDisp = 0;
+for (var i = 0; i < allKiosks.length; i++) {
+  beanFooterTotalDisp += allKiosks[i].dailyBeansTotal;
+}
 
-// var totalHourlyStaff = ;
+for (var i = 0; i < hours.length; i++) {
+  var sum = 0;
+  for (var j = 0; j < allKiosks.length; j++) {
+    sum += allKiosks[j].poundsHourly[i];
+  }
+  actualBeansHourly.push(sum);
+}
 
-var calcDailyStaffTotals = function() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    actualStaffDaily += allKiosks[i].dailyStaffTotal;
+var renderBeanTotals = function() {
+  var trEl = document.createElement('tr');
+  var tdEl = document.createElement('td');
+  tdEl.textContent = 'Totals';
+  trEl.appendChild(tdEl);
+
+  var tdEl = document.createElement('td');
+  tdEl.textContent = beanFooterTotalDisp + ' lbs';
+  trEl.appendChild(tdEl);
+
+  for (var i = 0; i < hours.length; i++) {
+    var tdEl = document.createElement('td');
+    tdEl.textContent = actualBeansHourly[i];
+    trEl.appendChild(tdEl);
   };
+  coffeeTable.appendChild(trEl);
 };
 
-// PROBLEM AREA - HELP!!!!!!
-// Renders the totals row ok, but the math itself is not right. been working on it for a while
-// and the solution is still escaping me!!
+//RENDER STAFF TABLE
+var staffFooterTotalDisp = 0;
+for (var i = 0; i < allKiosks.length; i++) {
+  staffFooterTotalDisp += allKiosks[i].dailyStaffTotal;
+}
 
+for (var i = 0; i < hours.length; i++) {
+  var sum = 0;
+  for (var j = 0; j < allKiosks.length; j++) {
+    sum += allKiosks[j].staffHourly[i];
+  }
+  actualStaffHourly.push(sum);
+}
 
 var renderStaffTotals = function() {
   var trEl = document.createElement('tr');
@@ -228,7 +265,7 @@ var renderStaffTotals = function() {
   trEl.appendChild(tdEl);
 
   var tdEl = document.createElement('td');
-  tdEl.textContent = actualStaffDaily;
+  tdEl.textContent = staffFooterTotalDisp + ' hrs';
   trEl.appendChild(tdEl);
 
   for (var i = 0; i < hours.length; i++) {
@@ -238,4 +275,6 @@ var renderStaffTotals = function() {
   };
   staffTable.appendChild(trEl);
 };
+
+renderBeanTotals();
 renderStaffTotals();
