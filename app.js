@@ -1,6 +1,10 @@
 // Global Variables - hours and locations
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
 var allKiosks = [];
+var actualStaffHourly = [];
+var actualStaffDaily = [];
+var coffeeTable = document.getElementById('beans-table');
+var staffTable = document.getElementById('baristas-table');
 
 //Kiosk Location Constructor
 function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
@@ -159,7 +163,6 @@ var southLakeUnion = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, 0.04);
 var seaTacAirport = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, 0.41);
 
 //Coffee Table Render
-var coffeeTable = document.getElementById('beans-table');
 
 var thEl = document.createElement('th');
 thEl.textContent = '';
@@ -176,7 +179,6 @@ for (var i = 0; i < hours.length; i++) {
 };
 
 // Barista Table Render
-var staffTable = document.getElementById('baristas-table');
 
 var thEl = document.createElement('th');
 thEl.textContent = '';
@@ -205,8 +207,7 @@ seaTacAirport.renderBeans();
 seaTacAirport.renderStaff();
 
 //Render Totals Vars and functions
-var actualStaffDaily = 0;
-var actualStaffHourly = [];
+
 // var totalHourlyStaff = ;
 
 var calcDailyStaffTotals = function() {
@@ -218,17 +219,9 @@ var calcDailyStaffTotals = function() {
 // PROBLEM AREA - HELP!!!!!!
 // Renders the totals row ok, but the math itself is not right. been working on it for a while
 // and the solution is still escaping me!!
-var calcHourlyStaffTotals = function() {
-  for (var j = 0; j < allKiosks.length; j++) {
-    for (var i = 0; i < hours.length; i++) {
-      actualStaffHourly.push(allKiosks[j].staffHourly[i]);
-    };
-  };
-};
+
 
 var renderStaffTotals = function() {
-  calcDailyStaffTotals();
-  calcHourlyStaffTotals();
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = 'Totals';
