@@ -150,7 +150,7 @@ CoffeeKiosk.prototype.renderStaff = function() {
   trEl.appendChild(tdEl);
 
   var tdEl = document.createElement('td');
-  tdEl.textContent = this.dailyStaffTotal + ' Hrs';
+  tdEl.textContent = this.dailyStaffTotal + ' hrs';
   trEl.appendChild(tdEl);
 
   for (var i = 0; i < hours.length; i++) {
