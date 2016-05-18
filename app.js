@@ -27,7 +27,6 @@ function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
 //Calculation Methods
 CoffeeKiosk.prototype.calcCustHourly = function(min, max) {
   for (var i = 0; i < hours.length; i ++) {
-    console.log(this);
     var customers = Math.floor(Math.random() * (max - min + 1)) + min;
     this.custHourly.push(customers);
   };
@@ -35,7 +34,6 @@ CoffeeKiosk.prototype.calcCustHourly = function(min, max) {
 
 CoffeeKiosk.prototype.calcCupsHourly = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     var cups = Math.ceil(this.custHourly[i] * this.avgCupsCust);
     this.cupsHourly.push(cups);
   };
@@ -43,7 +41,6 @@ CoffeeKiosk.prototype.calcCupsHourly = function() {
 
 CoffeeKiosk.prototype.calcBeansForCupsHourly = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     var beans = Math.ceil(this.cupsHourly[i] / 16);
     this.beansForCupsHourly.push(beans);
   };
@@ -51,7 +48,6 @@ CoffeeKiosk.prototype.calcBeansForCupsHourly = function() {
 
 CoffeeKiosk.prototype.calcPoundPacksHourly = function() {
   for (var i = 0; i < hours.length; i ++) {
-    console.log(this);
     var packs = Math.ceil(this.custHourly[i] * this.avgPoundsCust);
     this.poundPacksHourly.push(packs);
   };
@@ -59,7 +55,6 @@ CoffeeKiosk.prototype.calcPoundPacksHourly = function() {
 
 CoffeeKiosk.prototype.calcTotalPoundsHourly = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     var pounds = this.beansForCupsHourly[i] + this.poundPacksHourly[i];
     this.poundsHourly.push(pounds);
   };
@@ -67,7 +62,6 @@ CoffeeKiosk.prototype.calcTotalPoundsHourly = function() {
 
 CoffeeKiosk.prototype.calcStaffHourly = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     var staff = this.custHourly[i] / 2;
     this.staffHourly.push(staff);
   };
@@ -75,35 +69,30 @@ CoffeeKiosk.prototype.calcStaffHourly = function() {
 
 CoffeeKiosk.prototype.calcDailyCustTotal = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     this.dailyCustTotal += this.custHourly[i];
   };
 };
 
 CoffeeKiosk.prototype.calcDailyCupsTotal = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     this.dailyCupsTotal += this.cupsHourly[i];
   };
 };
 
 CoffeeKiosk.prototype.calcDailyPoundPacksTotal = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     this.dailyPoundPacksTotal += this.poundPacksHourly[i];
   };
 };
 
 CoffeeKiosk.prototype.calcDailyBeansTotal = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     this.dailyBeansTotal += this.poundsHourly[i];
   };
 };
 
 CoffeeKiosk.prototype.calcDailyStaffTotal = function() {
   for (var i = 0; i < hours.length; i++) {
-    console.log(this);
     this.dailyStaffTotal += this.staffHourly[i];
   };
 };
