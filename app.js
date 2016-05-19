@@ -163,7 +163,6 @@ CoffeeKiosk.prototype.renderStaff = function() {
   staffTable.appendChild(trEl);
 };
 
-//Coffee Table header Render
 function headerBeansRender() {
   var thEl = document.createElement('th');
   thEl.textContent = '';
@@ -180,7 +179,6 @@ function headerBeansRender() {
   }
 }
 
-// Barista Table Header Render
 function headerBaristaRender() {
   var thEl = document.createElement('th');
   thEl.textContent = '';
@@ -197,7 +195,6 @@ function headerBaristaRender() {
   }
 }
 
-//Footer Display Var
 var beanFooterTotalDisp = 0;
 
 function beansTotalDisp() {
@@ -236,7 +233,6 @@ function renderBeanTotals() {
   coffeeTable.appendChild(trEl);
 };
 
-//RENDER STAFF TABLE
 var staffFooterTotalDisp = 0;
 
 function staffTotalDisp() {
