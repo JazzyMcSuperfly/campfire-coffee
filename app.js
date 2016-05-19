@@ -1,10 +1,11 @@
-// Global Variables - hours and locations
+// Global Variables - hours, locations, totals etc...
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
 var allKiosks = [];
 var actualStaffHourly = [];
 var actualBeansHourly = [];
 var coffeeTable = document.getElementById('beans-table');
 var staffTable = document.getElementById('baristas-table');
+var addNewStore = document.getElementById('addNewStore');
 
 //Kiosk Location Constructor
 function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
@@ -161,6 +162,13 @@ CoffeeKiosk.prototype.renderStaff = function() {
   staffTable.appendChild(trEl);
 };
 
+var runRenders = function() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    allKiosks[i].renderBeans();
+    allKiosks[i].renderStaff();
+  }
+};
+
 //Creating store objects
 var pikePlace = new CoffeeKiosk('Pike Place Market', 14, 35, 1.2, 0.34);
 var capitolHill = new CoffeeKiosk('Capitol Hill', 12, 28, 3.2, 0.03);
@@ -200,19 +208,9 @@ for (var i = 0; i < hours.length; i++) {
   staffTable.appendChild(thEl);
 };
 
-
-//Render Data Function -------------- TO BE DRIED LATER
-pikePlace.renderBeans();
-pikePlace.renderStaff();
-capitolHill.renderBeans();
-capitolHill.renderStaff();
-seattlePublicLibrary.renderBeans();
-seattlePublicLibrary.renderStaff();
-southLakeUnion.renderBeans();
-southLakeUnion.renderStaff();
-seaTacAirport.renderBeans();
-seaTacAirport.renderStaff();
-
+//Render Data Function
+runRenders();
+//Footer Display Var
 var beanFooterTotalDisp = 0;
 for (var i = 0; i < allKiosks.length; i++) {
   beanFooterTotalDisp += allKiosks[i].dailyBeansTotal;
@@ -276,5 +274,38 @@ var renderStaffTotals = function() {
   staffTable.appendChild(trEl);
 };
 
-renderBeanTotals();
-renderStaffTotals();
+//EVENT HANDLERS!
+
+function handleAddNew(event) {
+  event.preventDefault();
+
+  if (!event.target.location.value || !event.target.min.value || !event.target.max.value || !event.target.avgCups.value || !event.target.avgPounds.value) {
+    return alert('Please include ALL relevant data!');
+  }
+
+  var location = event.target.location.value;
+  var min = event.target.min.value;
+  var max = event.target.max.value;
+  var avgCups = event.target.avgCups.value;
+  var avgPounds = event.target.avgPounds.value;
+
+  var newStore = function() { new CoffeeKiosk(location, min, max, avgCups, avgPounds);
+  };
+  newStore();
+
+  event.target.location.value = null;
+  event.target.min.value = null;
+  event.target.max.value = null;
+  event.target.avgCups.value = null;
+  event.target.avgPounds.value = null;
+}
+
+function renderTotals() {
+  renderBeanTotals();
+  renderStaffTotals();
+}
+
+renderTotals();
+
+//event listener
+addNewStore.addEventListener('submit', handleAddNew);
