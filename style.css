@@ -1,1 +1,30 @@
-/*style yo*/
+* {
+  font-family: Arial, sans-serif;
+};
+
+td {
+  border: 2px solid #012438;
+};
+
+tr {
+
+};
+
+tr:nth-child(even) {
+  background-color: #cedd77
+};
+
+th {
+  background-color: #ddffff;
+  border: 2px solid #012438;
+};
+
+table {
+  border: 2px solid #012438;
+  border-radius: 10px;
+
+};
+
+#tables {
+  background-color: #9a7415;
+};
