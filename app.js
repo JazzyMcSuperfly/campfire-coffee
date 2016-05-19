@@ -212,12 +212,13 @@ function beansHourlyTotalRow() {
     for (var j = 0; j < allKiosks.length; j++) {
       sum += allKiosks[j].poundsHourly[i];
     }
-    console.log(sum);
     actualBeansHourly.push(sum);
   }
 }
 
 function renderBeanTotals() {
+  beansTotalDisp();
+  beansHourlyTotalRow();
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = 'Totals';
@@ -255,6 +256,8 @@ function staffHourlyTotalRow() {
 }
 
 function renderStaffTotals() {
+  staffTotalDisp();
+  staffHourlyTotalRow();
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = 'Totals';
@@ -285,8 +288,8 @@ function renderTables() {
 }
 
 function renderNewTables() {
-  coffeeTable.innerHtml = '';
-  staffTable.innerHtml = '';
+  coffeeTable.innerHTML = '';
+  staffTable.innerHTML = '';
   renderTables();
 };
 
@@ -297,10 +300,6 @@ var seattlePublicLibrary = new CoffeeKiosk('Seattle Public Library', 9, 45, 2.6,
 var southLakeUnion = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, 0.04);
 var seaTacAirport = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, 0.41);
 
-beansTotalDisp();
-beansHourlyTotalRow();
-staffTotalDisp();
-staffHourlyTotalRow();
 renderTables();
 
 //EVENT HANDLERS!
