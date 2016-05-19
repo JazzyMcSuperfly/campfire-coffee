@@ -111,8 +111,8 @@ CoffeeKiosk.prototype.calcActualStaffHourly = function() {
   }
 };
 
-//Render Methods
-CoffeeKiosk.prototype.renderBeans = function() {
+//Calc Method
+CoffeeKiosk.prototype.calcAll = function() {
   this.calcCustHourly(this.minCust, this.maxCust);
   this.calcCupsHourly();
   this.calcBeansForCupsHourly();
@@ -122,8 +122,12 @@ CoffeeKiosk.prototype.renderBeans = function() {
   this.calcDailyCustTotal();
   this.calcDailyCupsTotal();
   this.calcDailyPoundPacksTotal();
+  this.calcDailyStaffTotal();
   this.calcDailyBeansTotal();
+};
 
+//Render Methods
+CoffeeKiosk.prototype.renderBeans = function() {
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = this.locName;
@@ -137,14 +141,11 @@ CoffeeKiosk.prototype.renderBeans = function() {
     var tdEl = document.createElement('td');
     tdEl.textContent = this.poundsHourly[i];
     trEl.appendChild(tdEl);
-  };
+  }
   coffeeTable.appendChild(trEl);
 };
 
 CoffeeKiosk.prototype.renderStaff = function() {
-  this.calcStaffHourly();
-  this.calcDailyStaffTotal();
-
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = this.locName;
@@ -158,7 +159,7 @@ CoffeeKiosk.prototype.renderStaff = function() {
     var tdEl = document.createElement('td');
     tdEl.textContent = this.staffHourly[i];
     trEl.appendChild(tdEl);
-  };
+  }
   staffTable.appendChild(trEl);
 };
 
@@ -176,7 +177,7 @@ function headerBeansRender() {
     var thEl = document.createElement('th');
     thEl.textContent = hours[i];
     coffeeTable.appendChild(thEl);
-  };
+  }
 }
 
 // Barista Table Header Render
@@ -193,21 +194,27 @@ function headerBaristaRender() {
     var thEl = document.createElement('th');
     thEl.textContent = hours[i];
     staffTable.appendChild(thEl);
-  };
+  }
 }
 
 //Footer Display Var
 var beanFooterTotalDisp = 0;
-for (var i = 0; i < allKiosks.length; i++) {
-  beanFooterTotalDisp += allKiosks[i].dailyBeansTotal;
+
+function beansTotalDisp() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    beanFooterTotalDisp += allKiosks[i].dailyBeansTotal;
+  }
 }
 
-for (var i = 0; i < hours.length; i++) {
-  var sum = 0;
-  for (var j = 0; j < allKiosks.length; j++) {
-    sum += allKiosks[j].poundsHourly[i];
+function beansHourlyTotalRow() {
+  for (var i = 0; i < hours.length; i++) {
+    var sum = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      sum += allKiosks[j].poundsHourly[i];
+    }
+    console.log(sum);
+    actualBeansHourly.push(sum);
   }
-  actualBeansHourly.push(sum);
 }
 
 function renderBeanTotals() {
@@ -230,16 +237,21 @@ function renderBeanTotals() {
 
 //RENDER STAFF TABLE
 var staffFooterTotalDisp = 0;
-for (var i = 0; i < allKiosks.length; i++) {
-  staffFooterTotalDisp += allKiosks[i].dailyStaffTotal;
+
+function staffTotalDisp() {
+  for (var i = 0; i < allKiosks.length; i++) {
+    staffFooterTotalDisp += allKiosks[i].dailyStaffTotal;
+  }
 }
 
-for (var i = 0; i < hours.length; i++) {
-  var sum = 0;
-  for (var j = 0; j < allKiosks.length; j++) {
-    sum += allKiosks[j].staffHourly[i];
+function staffHourlyTotalRow() {
+  for (var i = 0; i < hours.length; i++) {
+    var sum = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      sum += allKiosks[j].staffHourly[i];
+    }
+    actualStaffHourly.push(sum);
   }
-  actualStaffHourly.push(sum);
 }
 
 function renderStaffTotals() {
@@ -264,6 +276,7 @@ function renderTables() {
   headerBeansRender();
   headerBaristaRender();
   for (var i = 0; i < allKiosks.length; i++) {
+    allKiosks[i].calcAll();
     allKiosks[i].renderBeans();
     allKiosks[i].renderStaff();
   }
@@ -284,6 +297,10 @@ var seattlePublicLibrary = new CoffeeKiosk('Seattle Public Library', 9, 45, 2.6,
 var southLakeUnion = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, 0.04);
 var seaTacAirport = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, 0.41);
 
+beansTotalDisp();
+beansHourlyTotalRow();
+staffTotalDisp();
+staffHourlyTotalRow();
 renderTables();
 
 //EVENT HANDLERS!
