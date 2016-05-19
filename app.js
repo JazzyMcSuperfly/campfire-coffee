@@ -5,7 +5,7 @@ var actualStaffHourly = [];
 var actualBeansHourly = [];
 var coffeeTable = document.getElementById('beans-table');
 var staffTable = document.getElementById('baristas-table');
-var addNewStore = document.getElementById('addNewStore');
+var newStoreForm = document.getElementById('newStoreForm');
 
 //Kiosk Location Constructor
 function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
@@ -162,54 +162,40 @@ CoffeeKiosk.prototype.renderStaff = function() {
   staffTable.appendChild(trEl);
 };
 
-var runRenders = function() {
-  for (var i = 0; i < allKiosks.length; i++) {
-    allKiosks[i].renderBeans();
-    allKiosks[i].renderStaff();
-  }
-};
-
-//Creating store objects
-var pikePlace = new CoffeeKiosk('Pike Place Market', 14, 35, 1.2, 0.34);
-var capitolHill = new CoffeeKiosk('Capitol Hill', 12, 28, 3.2, 0.03);
-var seattlePublicLibrary = new CoffeeKiosk('Seattle Public Library', 9, 45, 2.6, 0.02);
-var southLakeUnion = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, 0.04);
-var seaTacAirport = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, 0.41);
-
 //Coffee Table header Render
-
-var thEl = document.createElement('th');
-thEl.textContent = '';
-coffeeTable.appendChild(thEl);
-
-var thEl = document.createElement('th');
-thEl.textContent = 'Daily Location Total';
-coffeeTable.appendChild(thEl);
-
-for (var i = 0; i < hours.length; i++) {
+function headerBeansRender() {
   var thEl = document.createElement('th');
-  thEl.textContent = hours[i];
+  thEl.textContent = '';
   coffeeTable.appendChild(thEl);
-};
+
+  var thEl = document.createElement('th');
+  thEl.textContent = 'Daily Location Total';
+  coffeeTable.appendChild(thEl);
+
+  for (var i = 0; i < hours.length; i++) {
+    var thEl = document.createElement('th');
+    thEl.textContent = hours[i];
+    coffeeTable.appendChild(thEl);
+  };
+}
 
 // Barista Table Header Render
-
-var thEl = document.createElement('th');
-thEl.textContent = '';
-staffTable.appendChild(thEl);
-
-var thEl = document.createElement('th');
-thEl.textContent = 'Daily Location Total';
-staffTable.appendChild(thEl);
-
-for (var i = 0; i < hours.length; i++) {
+function headerBaristaRender() {
   var thEl = document.createElement('th');
-  thEl.textContent = hours[i];
+  thEl.textContent = '';
   staffTable.appendChild(thEl);
-};
 
-//Render Data Function
-runRenders();
+  var thEl = document.createElement('th');
+  thEl.textContent = 'Daily Location Total';
+  staffTable.appendChild(thEl);
+
+  for (var i = 0; i < hours.length; i++) {
+    var thEl = document.createElement('th');
+    thEl.textContent = hours[i];
+    staffTable.appendChild(thEl);
+  };
+}
+
 //Footer Display Var
 var beanFooterTotalDisp = 0;
 for (var i = 0; i < allKiosks.length; i++) {
@@ -224,7 +210,7 @@ for (var i = 0; i < hours.length; i++) {
   actualBeansHourly.push(sum);
 }
 
-var renderBeanTotals = function() {
+function renderBeanTotals() {
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = 'Totals';
@@ -256,7 +242,7 @@ for (var i = 0; i < hours.length; i++) {
   actualStaffHourly.push(sum);
 }
 
-var renderStaffTotals = function() {
+function renderStaffTotals() {
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = 'Totals';
@@ -274,8 +260,33 @@ var renderStaffTotals = function() {
   staffTable.appendChild(trEl);
 };
 
-//EVENT HANDLERS!
+function renderTables() {
+  headerBeansRender();
+  headerBaristaRender();
+  for (var i = 0; i < allKiosks.length; i++) {
+    allKiosks[i].renderBeans();
+    allKiosks[i].renderStaff();
+  }
+  renderBeanTotals();
+  renderStaffTotals();
+}
 
+function renderNewTables() {
+  coffeeTable.innerHtml = '';
+  staffTable.innerHtml = '';
+  renderTables();
+};
+
+//Creating store objects
+var pikePlace = new CoffeeKiosk('Pike Place Market', 14, 35, 1.2, 0.34);
+var capitolHill = new CoffeeKiosk('Capitol Hill', 12, 28, 3.2, 0.03);
+var seattlePublicLibrary = new CoffeeKiosk('Seattle Public Library', 9, 45, 2.6, 0.02);
+var southLakeUnion = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, 0.04);
+var seaTacAirport = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, 0.41);
+
+renderTables();
+
+//EVENT HANDLERS!
 function handleAddNew(event) {
   event.preventDefault();
 
@@ -289,7 +300,8 @@ function handleAddNew(event) {
   var avgCups = event.target.avgCups.value;
   var avgPounds = event.target.avgPounds.value;
 
-  var newStore = function() { new CoffeeKiosk(location, min, max, avgCups, avgPounds);
+  var newStore = function() {
+    new CoffeeKiosk(location, min, max, avgCups, avgPounds);
   };
   newStore();
 
@@ -298,14 +310,9 @@ function handleAddNew(event) {
   event.target.max.value = null;
   event.target.avgCups.value = null;
   event.target.avgPounds.value = null;
-}
 
-function renderTotals() {
-  renderBeanTotals();
-  renderStaffTotals();
+  renderNewTables();
 }
-
-renderTotals();
 
 //event listener
-addNewStore.addEventListener('submit', handleAddNew);
+newStoreForm.addEventListener('submit', handleAddNew);
