@@ -1,30 +1,83 @@
 * {
   font-family: Arial, sans-serif;
-};
+}
+
+body {
+  background-color: #14213d;
+}
+
+h1 {
+
+  text-align: center;
+  border-bottom: 4px solid #14213d;
+
+}
 
 td {
-  border: 2px solid #012438;
-};
-
-tr {
-
-};
+  border: 2px solid #14213d;
+  text-align: center;
+  line-height: 35px;
+}
 
 tr:nth-child(even) {
-  background-color: #cedd77
-};
+  background-color: #ffffff;
+}
 
 th {
-  background-color: #ddffff;
+  color: #fca311;
+  background-color: #14213d;
   border: 2px solid #012438;
-};
+  line-height: 40px;
+}
 
 table {
-  border: 2px solid #012438;
-  border-radius: 10px;
+  border: 3px solid #14213d;
+  border-radius: 7px;
 
-};
+}
 
 #tables {
-  background-color: #9a7415;
-};
+  background-color: #e5e5e5;
+  color: #14213d;
+  border: 5px solid #14213d;
+  border-radius: 7px;
+  width: 75%;
+}
+
+
+#newStoreForm {
+  width: 15%;
+  text-align: center;
+  
+}
+
+label {
+  display: block;
+  margin: 15px;
+}
+
+button {
+  display: block;
+  border: 5px solid #fca311;
+  border-radius: 7px;
+  background-color: #14213d;
+  color: #e5e5e5;
+  margin: 15px auto 15px auto;
+}
+
+fieldset {
+  border-radius: 7px;
+  border: 5px solid #fca311;
+  color: #e5e5e5;
+}
+
+legend {
+  border: 5px solid #fca311;
+  border-radius: 7px;
+  color: #e5e5e5;
+}
+
+.data {
+  margin: 10px;
+  width: 98%;
+}
