@@ -3,31 +3,30 @@
 
   <head>
     <title>Campfire Coffee, Tuesday version</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
 
   <body>
     <div id="tables">
-      <h1>Beans Needed By Location Each Day</h1>
-      <table id="beans-table"></table>
-      <br/>
-      <h1>Barista Hours Needed By Location Each Day</h1>
-      <table id="baristas-table"></table>
+      <h1> ----- Beans Needed By Location Each Day -----</h1>
+      <table id="beans-table" class="data"></table>
+      <h1> ----- Barista Hours Needed By Location Each Day -----</h1>
+      <table id="baristas-table" class="data"></table>
     </div>
     <br/>
     <!-- NEW STORE ENTRY FORM! -->
 
     <form id="newStoreForm">
       <fieldset>
-        <legend>Add New Store to Data Table</legend>
+        <legend><b>~ ADD NEW STORE INFO HERE  ~</b></legend>
 
-        <label for="location">New Store: </label>
+        <label for="location">New Store Location Name: </label>
         <input name="location" type="text" />
 
-        <label for="min">Min Customers Per Hour: </label>
+        <label for="min">Minimum Customers Per Hour: </label>
         <input name="min" type="text" />
 
-        <label for="max">Max Customers Per Hour: </label>
+        <label for="max">Maximum Customers Per Hour: </label>
         <input name="max" type="text" />
 
         <label for="avgCups">Average Cups Per Customer: </label>

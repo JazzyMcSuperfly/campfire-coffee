@@ -1,8 +1,9 @@
-// Global Variables - hours, locations, totals etc...
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
 var allKiosks = [];
 var actualStaffHourly = [];
 var actualBeansHourly = [];
+var staffFooterTotalDisp = 0;
+var beanFooterTotalDisp = 0;
 var coffeeTable = document.getElementById('beans-table');
 var staffTable = document.getElementById('baristas-table');
 var newStoreForm = document.getElementById('newStoreForm');
@@ -111,7 +112,6 @@ CoffeeKiosk.prototype.calcActualStaffHourly = function() {
   }
 };
 
-//Calc Method
 CoffeeKiosk.prototype.calcAll = function() {
   this.calcCustHourly(this.minCust, this.maxCust);
   this.calcCupsHourly();
@@ -195,8 +195,6 @@ function headerBaristaRender() {
   }
 }
 
-var beanFooterTotalDisp = 0;
-
 function beansTotalDisp() {
   for (var i = 0; i < allKiosks.length; i++) {
     beanFooterTotalDisp += allKiosks[i].dailyBeansTotal;
@@ -232,8 +230,6 @@ function renderBeanTotals() {
   };
   coffeeTable.appendChild(trEl);
 };
-
-var staffFooterTotalDisp = 0;
 
 function staffTotalDisp() {
   for (var i = 0; i < allKiosks.length; i++) {
@@ -283,9 +279,13 @@ function renderTables() {
   renderStaffTotals();
 }
 
-function renderNewTables() {
+function nukeTables() {
   coffeeTable.innerHTML = '';
   staffTable.innerHTML = '';
+}
+
+function renderNewTables() {
+  nukeTables();
   renderTables();
 };
 
@@ -298,7 +298,7 @@ var seaTacAirport = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, 0.41);
 
 renderTables();
 
-//EVENT HANDLERS!
+//EVENT HANDLER!
 function handleAddNew(event) {
   event.preventDefault();
 
@@ -326,5 +326,4 @@ function handleAddNew(event) {
   renderNewTables();
 }
 
-//event listener
 newStoreForm.addEventListener('submit', handleAddNew);
