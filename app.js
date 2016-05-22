@@ -34,6 +34,11 @@ function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
 };
 
 //Calculation Methods
+//DEMO REDUCTION
+// CoffeeKiosk.prototype.calcCupsBeans = function(rate, destArray, destTotal) {
+//
+// }
+
 CoffeeKiosk.prototype.calcCustHourly = function(min, max) {
   for (var i = 0; i < hours.length; i ++) {
     var customers = Math.floor(Math.random() * (max - min + 1)) + min;
