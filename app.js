@@ -33,12 +33,6 @@ function CoffeeKiosk(locName, minCust, maxCust, avgCupsCust, avgPoundsCust) {
   allKiosks.push(this);
 };
 
-//Calculation Methods
-//DEMO REDUCTION
-// CoffeeKiosk.prototype.calcCupsBeans = function(rate, destArray, destTotal) {
-//
-// }
-
 CoffeeKiosk.prototype.calcCustHourly = function(min, max) {
   for (var i = 0; i < hours.length; i ++) {
     var customers = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -168,7 +162,7 @@ CoffeeKiosk.prototype.renderStaff = function() {
   staffTable.appendChild(trEl);
 };
 
-function headerBeansRender() {
+var headerBeansRender = function() {
   var thEl = document.createElement('th');
   thEl.textContent = '';
   coffeeTable.appendChild(thEl);
@@ -182,9 +176,9 @@ function headerBeansRender() {
     thEl.textContent = hours[i];
     coffeeTable.appendChild(thEl);
   }
-}
+};
 
-function headerBaristaRender() {
+var headerBaristaRender = function() {
   var thEl = document.createElement('th');
   thEl.textContent = '';
   staffTable.appendChild(thEl);
@@ -198,15 +192,17 @@ function headerBaristaRender() {
     thEl.textContent = hours[i];
     staffTable.appendChild(thEl);
   }
-}
+};
 
-function beansTotalDisp() {
+var beansTotalDisp = function() {
+  beanFooterTotalDisp = 0;
   for (var i = 0; i < allKiosks.length; i++) {
     beanFooterTotalDisp += allKiosks[i].dailyBeansTotal;
   }
-}
+};
 
-function beansHourlyTotalRow() {
+var beansHourlyTotalRow = function() {
+  var actualBeansHourly = [];
   for (var i = 0; i < hours.length; i++) {
     var sum = 0;
     for (var j = 0; j < allKiosks.length; j++) {
@@ -214,9 +210,9 @@ function beansHourlyTotalRow() {
     }
     actualBeansHourly.push(sum);
   }
-}
+};
 
-function renderBeanTotals() {
+var renderBeanTotals = function() {
   beansTotalDisp();
   beansHourlyTotalRow();
   var trEl = document.createElement('tr');
@@ -236,13 +232,26 @@ function renderBeanTotals() {
   coffeeTable.appendChild(trEl);
 };
 
-function staffTotalDisp() {
+var staffTotalDisp = function() {
+  staffFooterTotalDisp = 0;
   for (var i = 0; i < allKiosks.length; i++) {
     staffFooterTotalDisp += allKiosks[i].dailyStaffTotal;
   }
-}
+};
 
-function staffHourlyTotalRow() {
+var beansHourlyTotalRow = function() {
+  actualBeansHourly = [];
+  for (var i = 0; i < hours.length; i++) {
+    var sum = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      sum += allKiosks[j].poundsHourly[i];
+    }
+    actualBeansHourly.push(sum);
+  }
+};
+
+var staffHourlyTotalRow = function() {
+  actualStaffHourly = [];
   for (var i = 0; i < hours.length; i++) {
     var sum = 0;
     for (var j = 0; j < allKiosks.length; j++) {
@@ -250,9 +259,9 @@ function staffHourlyTotalRow() {
     }
     actualStaffHourly.push(sum);
   }
-}
+};
 
-function renderStaffTotals() {
+var renderStaffTotals = function() {
   staffTotalDisp();
   staffHourlyTotalRow();
   var trEl = document.createElement('tr');
@@ -272,7 +281,7 @@ function renderStaffTotals() {
   staffTable.appendChild(trEl);
 };
 
-function renderTables() {
+var renderTables = function() {
   headerBeansRender();
   headerBaristaRender();
   for (var i = 0; i < allKiosks.length; i++) {
@@ -282,14 +291,14 @@ function renderTables() {
   }
   renderBeanTotals();
   renderStaffTotals();
-}
+};
 
-function nukeTables() {
+var nukeTables = function() {
   coffeeTable.innerHTML = '';
   staffTable.innerHTML = '';
-}
+};
 
-function renderNewTables() {
+var renderNewTables = function() {
   nukeTables();
   renderTables();
 };
@@ -320,7 +329,9 @@ function handleAddNew(event) {
   var newStore = function() {
     new CoffeeKiosk(location, min, max, avgCups, avgPounds);
   };
+
   newStore();
+  // console.log(location.);
 
   event.target.location.value = null;
   event.target.min.value = null;
