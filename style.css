@@ -4,6 +4,7 @@
 
 body {
   background-color: #14213d;
+  margin: 0px auto;
 }
 
 h1 {
@@ -39,9 +40,8 @@ table {
 #tables {
   background-color: #e5e5e5;
   color: #14213d;
-  border: 5px solid #14213d;
+  border: 5px solid #fca311;
   border-radius: 7px;
-  width: 75%;
 }
 
 
@@ -80,4 +80,5 @@ legend {
 .data {
   margin: 10px;
   width: 98%;
+  border: #fca311;
 }
