@@ -65,3 +65,7 @@ button {
 #logo {
   border: 0px none;
 }
+
+#family {
+  float: right;
+}
