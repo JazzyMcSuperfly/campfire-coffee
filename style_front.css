@@ -1,0 +1,67 @@
+* {
+  border-radius: 5px;
+}
+
+body {
+  max-width: 701px;
+  margin: 5px auto;
+  background-image: url(images/bg-beans.jpg);
+  background-size: 100% 100%;
+  color: #DFECED;
+}
+
+header {
+  text-align: center;
+  color: #665e54;
+  background-color: #141207;
+  max-width: 75%;
+  margin: 0px auto;
+}
+
+main {
+  background-color: #141207;
+  border: 3px solid #665e54;
+
+}
+
+article>p {
+  text-align: justify;
+  border: 4px solid #665e54;
+  background-color: #3C3829;
+  margin: 5px;
+  padding: 15px;
+}
+
+footer {
+  text-align: center;
+}
+
+ul {
+  text-align: center;
+  list-style: none;
+}
+
+img {
+  border: 4px solid #141207;
+}
+
+a {
+  color: #141207;
+  margin: 5px;
+}
+
+button {
+  padding: 5px;
+  margin: 0px 0px 15px 15px;
+}
+
+.text {
+  width: 150px;
+  height: 115px;
+  float: left;
+  margin: 10px;
+}
+
+#logo {
+  border: 0px none;
+}
